@@ -17,7 +17,7 @@ jobs:
           # Docker Log in details configured in Github
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-          registry: 'https://hub.docker.com/repositories/kwameds'
+          registry: https://index.docker.io/v1/
     
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
