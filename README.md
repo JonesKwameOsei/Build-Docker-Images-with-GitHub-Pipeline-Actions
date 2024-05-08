@@ -22,7 +22,7 @@ hub create
 ```
 5. Optional: Add README.md (but recommended).
 ```
-echo "# Deploying an Online Boutigque Web Application with Kubernetes" >> README.md
+echo "## Automatically build Docker images with GitHub Actions" >> README.md
 ```
 6. Push the new repo to GitHub.
 ```
@@ -37,13 +37,52 @@ git remote add origin https://github.com/<github-username>/<repo-name>.git
 ```
 For step by step process of creating a github repo from thr terminal, check this [project](https://github.com/JonesKwameOsei/Deploy-Webapp-with-Kubernetes)
 
-### 2. Set up the Docker Build Workflow
-In your GitHub repository, create a new folder named `.github/workflows`. This is where you'll define your GitHub Actions workflow.
+### 2. Create the Dockerfile and Package File
+In the repository:
+- Create a file called Dockerfile.
+```
+nano Dockerfile
+```
+- Add these lines of codes:
+```
+FROM node:14
 
-Inside the `workflows` folder, create a new file named `docker-build.yml`. This file will contain the configuration for your Docker build workflow.
+WORKDIR /usr/src/app
 
-```yaml
-name: Docker Build
+COPY package.json .
+RUN npm install 
+COPY . .
+
+EXPOSE 3000
+
+CMD ["node", "index.js"]
+```
+- Perform the two steps above to create and add the lines below to the package.json
+```
+{
+    "name": "docker_nodejs_demo",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+      "config": "^3.3.6",
+      "express": "^4.17.1"
+    }
+  }
+```
+### 3. Set up the Docker Build Workflow
+In the GitHub repository, create a new folder named `.github/workflows`. This is where the GitHub Actions workflow is defined.
+
+Inside the `workflows` folder, create a new file named `dockerhub-push.yml`. This file will contain the configuration for the Docker build workflow.
+
+```
+name: Build and Push Docker image to Docker Hub
 
 on:
   push:
@@ -52,29 +91,28 @@ on:
     branches: [ "main" ]
 
 jobs:
-
-  build:
+  push_to_registry:
+    name: Push Docker image to Docker Hub
     runs-on: ubuntu-latest
-    
     steps:
-    - uses: actions/checkout@v4
+      - name: Check out the repo
+        uses: actions/checkout@v4
     
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v1
       
-    - name: Login to GitHub Packages
-      uses: docker/login-action@v1
-      with:
-        registry: ghcr.io
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
-        
-    - name: Build and push
-      uses: docker/build-push-action@v2
-      with:
-        context: .
-        push: true
-        tags: ghcr.io/${{ github.repository }}:${{ github.sha }}
+    - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+    
+    - name: Build and push Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: DockerFileFolder/
+          push: true
+          tags: rekhugopal/testrepo:latest
 ```
 
 This workflow will be triggered on push and pull request events to the `main` branch. It performs the following steps:
