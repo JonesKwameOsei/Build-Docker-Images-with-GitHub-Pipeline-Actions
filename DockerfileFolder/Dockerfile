@@ -8,5 +8,5 @@ COPY . .
 
 # expose the app on web
 EXPOSE 3000
-
+# command to run
 CMD ["node", "index.js"]
