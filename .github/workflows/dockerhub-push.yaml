@@ -17,12 +17,12 @@ jobs:
           # Docker Log in details configured in Github
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-          registry: https://index.docker.io/v1/
+        #   registry: https://index.docker.io/v1/
     
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
         with:
           # Folder containing the dockerfile with build and push command  
-          context: DockerFileFolder/
+          context: DockerFileFolder
           push: true
           tags: kwameds/mytestrepo:latest
