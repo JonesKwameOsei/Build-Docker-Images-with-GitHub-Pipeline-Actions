@@ -1,6 +1,7 @@
-# Docker-GitHub-Pipeline-Actions
-Automatically build Docker images with GitHub Actions
-# Docker-GitHub-Pipeline-Actions
+# Build Docker Images with GitHub Actions
+## Automatically build Docker images with GitHub Actions
+![dockergithub](https://github.com/JonesKwameOsei/Build-Docker-Images-with-GitHub-Pipeline-Actions/assets/81886509/f4cc3521-f027-48b7-aa37-fd13f9321680)
+
 
 ## Overview
 This project demonstrates how to automatically build Docker images using GitHub Actions. By integrating Docker and GitHub Actions, DevOps engineers can create a seamless **CI/CD (Continuous Integration/Continuous Deployment)** pipeline for projects, ensuring that Docker images are built and pushed to a registry whenever changes are made by developers to the codebase.
@@ -9,8 +10,33 @@ This project demonstrates how to automatically build Docker images using GitHub 
 
 ### 1. Create a GitHub Repository
 Begin by creating a new GitHub repository for your project. This will be the central location for your code, configurations, and the GitHub Actions workflow.<p>
-
+1. Open a new terminal in VScode.
+2. Create a directory with a repo name you desire (named mine `Deploy-Webapp-with-Kubernetes`).
+3. Initialise directory by running:
+```
+git init
+```
+4. Use **HuB** to change the local directory to a remote repo. Run:
+```
+hub create
+```
+5. Optional: Add README.md (but recommended).
+```
+echo "# Deploying an Online Boutigque Web Application with Kubernetes" >> README.md
+```
+6. Push the new repo to GitHub.
+```
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git push -u origin main
+```
+if you do not have Hub installed, manually create a github repo and run this command in the terminal:
+```
+git remote add origin https://github.com/<github-username>/<repo-name>.git
+```
 For step by step process of creating a github repo from thr terminal, check this [project](https://github.com/JonesKwameOsei/Deploy-Webapp-with-Kubernetes)
+
 ### 2. Set up the Docker Build Workflow
 In your GitHub repository, create a new folder named `.github/workflows`. This is where you'll define your GitHub Actions workflow.
 
@@ -31,7 +57,7 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v1
