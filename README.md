@@ -122,26 +122,53 @@ This workflow will be triggered on push and pull request events to the `main` br
 3. Logs in to the GitHub Container Registry (ghcr.io) using the `GITHUB_TOKEN` secret.
 4. Builds the Docker image and pushes it to the GitHub Container Registry, tagging it with the current commit SHA.
 
-### 3. Configure Docker Build Options
-In the root of your project, create a `Dockerfile` that defines the build instructions for your Docker image. This file should include the necessary steps to build and package your application.
+### 4. Generate Docker Hub Access Token
+The need for a Docker Hub access token when using GitHub Actions to build and push Docker images is related to authentication and authorization.
+When you want to push a Docker image to a registry, such as Docker Hub, the registry needs to verify that you have the necessary permissions to do so. This is where the access token comes into play.
+Here are the key reasons why you need a Docker Hub access token for GitHub Actions:
 
-Example `Dockerfile`:
+1. **Authentication**: The access token acts as a credential that authenticates your GitHub Actions workflow with Docker Hub. Without the token, the workflow would not be able to prove its identity to the registry and gain access to push the image.
 
-```Dockerfile
-FROM node:14-alpine
-WORKDIR /app
-COPY . .
-RUN npm ci
-CMD ["npm", "start"]
-```
+2. **Authorization**: The access token grants the necessary permissions to your GitHub Actions workflow to push the Docker image to your specific Docker Hub account or organization. This ensures that only authorized parties can push images to the designated registry location.
 
-### 4. Enable GitHub Packages
+3. **Security**: Using an access token is more secure than hardcoding your Docker Hub username and password directly in your GitHub Actions workflow. Access tokens can be managed and revoked separately, providing better control and security over your credentials.
+
+By providing the Docker Hub access token as a secret in the GitHub Actions workflow, we can securely authenticate your workflow and grant it the required permissions to push the Docker image to the desired registry location on Docker Hub.
+
+This approach is a best practice for managing credentials in the CI/CD pipelines, as it separates the sensitive information from the workflow code and ensures better security and maintainability of the build and deployment processes.
+- In `Docker Hub`, click on the `Docker Hub Profile` on the top right corner.<p>
+![image](https://github.com/JonesKwameOsei/Build-Docker-Images-with-GitHub-Pipeline-Actions/assets/81886509/6eaa67b7-f464-497b-8985-ec6e3fe50367)<p>
+- Select `My Account `.
+- Select `Security`.<p>
+![image](https://github.com/JonesKwameOsei/Build-Docker-Images-with-GitHub-Pipeline-Actions/assets/81886509/9c1a3c03-0f51-4537-8159-ef9668278e26)<p>
+- Click the `New Access Token` button.<p>
+![image](https://github.com/JonesKwameOsei/Build-Docker-Images-with-GitHub-Pipeline-Actions/assets/81886509/e16438c4-eba3-4167-a1b1-fe6ae4d67b2d)<p>
+- In the `Access Token Description` field, enter a description `GithubAction` for the token.<p>
+![image](https://github.com/JonesKwameOsei/Build-Docker-Images-with-GitHub-Pipeline-Actions/assets/81886509/c6b17bd1-11ff-495e-a392-64f4f0e61774)<p>
+- Leave the next field as default and click `Generate Token`.
+- Copy the token generated and close the pane. <p>
+![image](https://github.com/JonesKwameOsei/Build-Docker-Images-with-GitHub-Pipeline-Actions/assets/81886509/d3207ccd-ca38-476c-9949-c0ee064c94ae)<p>
+
+### 5. Store Secrets in Github Actions
+1. In the Github repo, click on settings.
+2. On the left silde, find `Secrets and Variables`, click the dropdown and select `Actions`.
+![image](https://github.com/JonesKwameOsei/Build-Docker-Images-with-GitHub-Pipeline-Actions/assets/81886509/9ec60cc6-8df0-4905-a16d-76f78d180c87)<p>
+3. Under the `Repository secrets`, click on the green button, `New repository Secret`.
+4. For `Name` and `Secret`, enter details of the following:
+|Name|Secret|
+|----|------|
+|DOKERHUB_USERNAME|Your docker username|
+|DOKERHUB_TOKEN|The access token generated|
+6.  
+
+
+### 6. Enable GitHub Packages
 To store your Docker images, you'll need to enable GitHub Packages for your repository. Go to your repository settings, navigate to the "Packages" section, and enable GitHub Packages.
 
-### 5. Run the GitHub Actions Workflow
-Commit and push your changes to the `main` branch of your GitHub repository. This will trigger the `docker-build.yml` workflow, which will automatically build and push your Docker image to the GitHub Container Registry.
+### 6. Run the GitHub Actions Workflow
+Commit and push the changes to the `main` branch of your GitHub repository. This will trigger the `docker-build.yml` workflow, which will automatically build and push your Docker image to the GitHub Container Registry.
 
-You can monitor the progress and check the status of the workflow run in the "Actions" tab of your GitHub repository.
+In the "Actions" tab of the GitHub repository, we can monitor the progress and check the status of the workflow run.
 
 ## Conclusion
 By leveraging GitHub Actions, you can seamlessly integrate Docker into your development pipeline. This approach allows you to automatically build and push Docker images to a registry, ensuring that your deployments are consistent and up-to-date with the latest changes to your codebase. This setup provides a reliable and efficient way to manage your Docker-based applications.
