@@ -22,6 +22,7 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
         with:
+          # Folder containing the dockerfile with build and push command  
           context: DockerFileFolder/
           push: true
           tags: kwameds/mytestrepo:latest
