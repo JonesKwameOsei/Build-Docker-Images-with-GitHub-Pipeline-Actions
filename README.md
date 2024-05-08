@@ -154,11 +154,12 @@ This approach is a best practice for managing credentials in the CI/CD pipelines
 2. On the left silde, find `Secrets and Variables`, click the dropdown and select `Actions`.
 ![image](https://github.com/JonesKwameOsei/Build-Docker-Images-with-GitHub-Pipeline-Actions/assets/81886509/9ec60cc6-8df0-4905-a16d-76f78d180c87)<p>
 3. Under the `Repository secrets`, click on the green button, `New repository Secret`.
-4. For `Name` and `Secret`, enter details of the following:
+4. For `Name` and `Secret`, enter details of the following:<p>
+
 |Name|Secret|
 |----|------|
 |DOKERHUB_USERNAME|Your docker username|
-|DOKERHUB_TOKEN|The access token generated|
+|DOKERHUB_TOKEN|The access token generated|<p>
 6.  
 
 
