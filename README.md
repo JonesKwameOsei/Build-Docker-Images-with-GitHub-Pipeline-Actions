@@ -185,4 +185,4 @@ Image in docker hub.<p>
 ![image](https://github.com/JonesKwameOsei/Build-Docker-Images-with-GitHub-Pipeline-Actions/assets/81886509/ee0d34c9-9c9f-4a12-a4cc-3449458f3050)
 
 ## Conclusion
-By leveraging GitHub Actions, you can seamlessly integrate Docker into your development pipeline. This approach allows you to automatically build and push Docker images to a registry, ensuring that your deployments are consistent and up-to-date with the latest changes to your codebase. This setup provides a reliable and efficient way to manage your Docker-based applications.
+By leveraging GitHub Actions, I have seamlessly integrated Docker into a development pipeline. This approach allow us to automatically build and push Docker images to a registry, ensuring that the deployments are consistent and up-to-date with the latest changes to the codebase. This setup provides a reliable and efficient way to manage the Docker-based applications.
