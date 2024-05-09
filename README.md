@@ -160,16 +160,29 @@ This approach is a best practice for managing credentials in the CI/CD pipelines
 |----|------|
 |DOKERHUB_USERNAME|Your docker username|
 |DOKERHUB_TOKEN|The access token generated|<p>
-6.  
 
-
-### 6. Enable GitHub Packages
-To store your Docker images, you'll need to enable GitHub Packages for your repository. Go to your repository settings, navigate to the "Packages" section, and enable GitHub Packages.
+The configuration should look like this:<p>
+![image](https://github.com/JonesKwameOsei/Build-Docker-Images-with-GitHub-Pipeline-Actions/assets/81886509/f7e19914-b23c-4671-9fa9-9b5461222a2c)<p>
 
 ### 6. Run the GitHub Actions Workflow
-Commit and push the changes to the `main` branch of your GitHub repository. This will trigger the `docker-build.yml` workflow, which will automatically build and push your Docker image to the GitHub Container Registry.
 
-In the "Actions" tab of the GitHub repository, we can monitor the progress and check the status of the workflow run.
+2. Add the changes and commit
+```
+git add .
+git commit -m "Added configuration files"
+```
+3. Push the commit to trigger the actions
+```
+git push origin main
+```
+Commit and push the changes to the `main` branch of your GitHub repository. This will trigger the `docker-build.yml` workflow, which will automatically build and push your Docker image to the GitHub Container Registry.In the "Actions" tab of the GitHub repository, we can monitor the progress and check the status of the workflow run.<p>
+
+The pipeline action is running.<p>
+![image](https://github.com/JonesKwameOsei/Build-Docker-Images-with-GitHub-Pipeline-Actions/assets/81886509/defd6bd1-a3ed-43bd-ad0d-0fcf54bc39f4)<p>
+GitHub action completed.We will confirm if the the image is in the `Docker Hub` registry. 
+![image](https://github.com/JonesKwameOsei/Build-Docker-Images-with-GitHub-Pipeline-Actions/assets/81886509/76437dc2-b45f-459f-870e-2b2a83a0207a)<p>
+Image in docker hub.<p>
+![image](https://github.com/JonesKwameOsei/Build-Docker-Images-with-GitHub-Pipeline-Actions/assets/81886509/ee0d34c9-9c9f-4a12-a4cc-3449458f3050)
 
 ## Conclusion
 By leveraging GitHub Actions, you can seamlessly integrate Docker into your development pipeline. This approach allows you to automatically build and push Docker images to a registry, ensuring that your deployments are consistent and up-to-date with the latest changes to your codebase. This setup provides a reliable and efficient way to manage your Docker-based applications.
